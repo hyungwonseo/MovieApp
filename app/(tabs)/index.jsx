@@ -39,7 +39,7 @@ export default function MovieListScreen() {
             <TouchableOpacity style={styles.card}
                 onPress={()=>{}}
             >
-                <Image source={ item.poster_path ? { url: IMG_PATH + item.poster_path } : noExist} 
+                <Image source={ item.poster_path ? { uri: IMG_PATH + item.poster_path } : noExist} 
                     style={styles.cardImage}
                 />
                 <Text style={styles.cardTitle} numberOfLines={1}>{item.title}</Text>
