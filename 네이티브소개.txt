@@ -1,0 +1,32 @@
+
+        React  vs  React Native
+        웹앱        네이티브앱
+
+<기술적 차이점>
+: 무엇을 고쳐야 react -> react native
+
+1. 개발환경(vite -> expo)
+
+2. 라이브러리 추가
+1) react-router-dom -> React Navigation
+2) 세션스토리지 -> AsyncStorage
+3) SVG 아이콘 -> react-native-svg
+
+3. UI컴포넌트
+<div> -> <View>
+<h1><h3><p><span> -> <Text>
+<img> -> <Image>
+<input> -> <TextInput>
+<button> -> <Button>
+
+4. css 스타일링
+css를 사용하지 않기 때문에
+styled-components -> Native Styling
+
+<명령어>
+npx create-expo-app .
+npx expo install 패키지명
+npx expo start
+
+
+
