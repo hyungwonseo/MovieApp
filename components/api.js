@@ -83,9 +83,7 @@ export async function getGenreListMovie() {
     } catch (error) {
         console.log(error);
         return [];
-    }
-
-    
+    }    
 }
 
 // [12, 35, 80]과 같이 숫자의 배열을 매개변수로 전달하면
