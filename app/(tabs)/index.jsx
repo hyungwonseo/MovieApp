@@ -1,7 +1,7 @@
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { categories, getGenreListMovie } from './api';
+import { ActivityIndicator, FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { categories, getGenreListMovie, getGenreName, IMG_PATH } from '../../components/api';
 const noExist = require('../../components/img/no_exist.jpg');
 
 export default function MovieListScreen() {
@@ -36,10 +36,16 @@ export default function MovieListScreen() {
 
     function renderMovieItem({item}) {
         return (
-            <TouchableOpacity>
-                <Image />
-                <Text></Text>
-                <Text></Text>
+            <TouchableOpacity style={styles.card}
+                onPress={()=>{}}
+            >
+                <Image source={ item.poster_path ? { url: IMG_PATH + item.poster_path } : noExist} 
+                    style={styles.cardImage}
+                />
+                <Text style={styles.cardTitle} numberOfLines={1}>{item.title}</Text>
+                <Text style={styles.cardGenre} numberOfLines={1}>
+                    {getGenreName(genreList, item.genre_ids)}
+                </Text>
             </TouchableOpacity>
         )
     }
