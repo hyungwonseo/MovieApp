@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 const noExist = require('../../components/img/no_exist.jpg');
 
 export default function MovieListScreen() {
@@ -45,18 +45,26 @@ export default function MovieListScreen() {
 
     return loading ? (
         // 1. 로딩중
-        <View></View>
+        <View style={styles.loaderContainer}>
+            <ActivityIndicator size="large" color="#1E90FF" />
+        </View>
     ) : !data || !data.results ? (
         // 2. 로딩이 끝났지만 데이터가 없을 때
-        <View></View>
+        <View style={styles.loaderContainer}>
+            <Text>영화 데이터를 불러오지 못했습니다. 다시 시도해주세요.</Text>
+        </View>
     ) : (
         // 3. 로딩이 끝나고 데이타도 있을 때
-        <View>
-            <Text>무비리스트</Text>
+        <View style={styles.container}>
+            <View style={styles.tabContainer}>
+
+            </View>            
             <FlatList 
                 data={data.results}
-                renderItem={()=>{}}
+                renderItem={renderMovieItem}
                 keyExtractor={(item) => item.id.toString()}
+                numColumns={2}
+                contentContainerStyle={styles.listContainer}
             />
         </View>
     )
