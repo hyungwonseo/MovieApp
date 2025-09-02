@@ -1,3 +1,4 @@
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 
 const header = {
@@ -60,25 +61,31 @@ export function searchMoviesByKeyword(keyword) {
 }
 
 export async function getGenreListMovie() {
-    let storedGenreList = JSON.parse(sessionStorage.getItem("GenreList"));
-    if (storedGenreList && typeof storedGenreList !== 'undefined' && storedGenreList.length > 0) {
-        console.log("세션스토리지에 장르리스트 있음");
-        return storedGenreList;
-    } else {
-        console.log("장르리스트 API 요청");
-        try {
+    try {
+        // let storedGenreList = JSON.parse(sessionStorage.getItem("GenreList"));
+        const storedGenreList = await AsyncStorage.getItem("GenreList");
+        
+        if (storedGenreList && typeof storedGenreList !== 'undefined' && storedGenreList.length > 0) {
+            console.log("AsyncStorage에 장르리스트 있음");
+            //return storedGenreList;
+            return JSON.parse(storedGenreList);
+        } else {
+            console.log("장르리스트 API 요청");            
             const response = await axios.get(
                 "https://api.themoviedb.org/3/genre/movie/list?language=en",
                 header
             );
             const genreList = response.data.genres;
-            sessionStorage.setItem("GenreList", JSON.stringify(genreList));
-            return genreList;
-        } catch (error) {
-            console.log(error);
-            return [];
+            //sessionStorage.setItem("GenreList", JSON.stringify(genreList));
+            await AsyncStorage.setItem("GenreList", JSON.stringify(genreList));
+            return genreList;             
         }
+    } catch (error) {
+        console.log(error);
+        return [];
     }
+
+    
 }
 
 // [12, 35, 80]과 같이 숫자의 배열을 매개변수로 전달하면
