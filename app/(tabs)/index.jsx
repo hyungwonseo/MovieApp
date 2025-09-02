@@ -1,6 +1,7 @@
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { categories, getGenreListMovie } from './api';
 const noExist = require('../../components/img/no_exist.jpg');
 
 export default function MovieListScreen() {
