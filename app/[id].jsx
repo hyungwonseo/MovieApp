@@ -1,6 +1,8 @@
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { TouchableOpacity } from "react-native";
+import { ActivityIndicator, StyleSheet, TouchableOpacity } from "react-native";
+import { ScrollView } from "react-native-web";
+import { getMovieCreditById, getMovieDetailById } from "../components/api";
 import { IconBack } from '../components/icons';
 
 export default function MovieDetailScreen() {
@@ -52,6 +54,37 @@ export default function MovieDetailScreen() {
                 )
             }}
         />
+        {
+            loading ? (
+                <View style={styles.loaderContainer}>
+                    <ActivityIndicator size={large} color="#1E90FF" />
+                </View>
+            ) : !data || !credit ? (
+                <View style={styles.loaderContainer}>
+                    <Text>상세 정보를 불러올 수 없습니다.</Text>
+                </View>
+            ) : (
+                <ScrollView style={styles.loaderContainer}>
+                    <Image></Image>
+                    <View>
+                        <Text style={styles.title}>{data.title}</Text>
+                        <Text style={styles.tagline}>{data.tagline}</Text>
+                        <Text style={styles.sectionTitle}>장르</Text>
+                        <Text style={styles.contentText}>{data.genres.map(g=>g.name).join(", ")}</Text>
+                        <Text style={styles.sectionTitle}>개봉일</Text>
+                        <Text style={styles.contentText}>{data.release_date}</Text>
+                        <Text style={styles.sectionTitle}>상영시간</Text>
+                        <Text style={styles.contentText}>{data.runtime}분</Text>
+                        <Text style={styles.title}>{data.title}</Text>
+                        <Text style={styles.title}>{data.title}</Text>
+                        <Text style={styles.title}>{data.title}</Text>
+                        <Text style={styles.title}>{data.title}</Text>
+                        <Text style={styles.title}>{data.title}</Text>
+                        <Text style={styles.title}>{data.title}</Text>
+                    </View>
+                </ScrollView>
+            )
+        }
     </>
 }
 
