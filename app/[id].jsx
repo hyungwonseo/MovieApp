@@ -1,6 +1,7 @@
-import { useLocalSearchParams, useRouter } from "expo-router";
-import { useState } from "react";
-
+import { Stack, useLocalSearchParams, useRouter } from "expo-router";
+import { useEffect, useState } from "react";
+import { TouchableOpacity } from "react-native";
+import { IconBack } from '../components/icons';
 
 export default function MovieDetailScreen() {
     const [data, setData] = useState(null);
@@ -38,5 +39,63 @@ export default function MovieDetailScreen() {
         }
     }
 
-    return <></>
+    return <>
+        <Stack.Screen 
+            options={{
+                title: data ? data.title : '로딩 중...',
+                headerLeft: () => (
+                    <TouchableOpacity onPress={()=>router.back()}
+                        style={{margineLeft: 15, width: 24, height: 24}}
+                    >
+                        <IconBack />
+                    </TouchableOpacity>
+                )
+            }}
+        />
+    </>
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  loaderContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  backdropImage: {
+    width: '100%',
+    height: 250,
+  },
+  contentContainer: {
+    padding: 15,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  tagline: {
+    fontSize: 16,
+    fontStyle: 'italic',
+    color: '#666',
+    marginBottom: 20,
+  },
+  sectionTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginTop: 15,
+    marginBottom: 5,
+  },
+  contentText: {
+    fontSize: 16,
+    lineHeight: 24,
+  },
+  linkText: {
+    fontSize: 16,
+    color: '#1E90FF',
+    textDecorationLine: 'underline',
+  },
+});
