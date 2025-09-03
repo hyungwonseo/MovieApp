@@ -75,12 +75,14 @@ export default function MovieDetailScreen() {
                         <Text style={styles.contentText}>{data.release_date}</Text>
                         <Text style={styles.sectionTitle}>상영시간</Text>
                         <Text style={styles.contentText}>{data.runtime}분</Text>
-                        <Text style={styles.title}>{data.title}</Text>
-                        <Text style={styles.title}>{data.title}</Text>
-                        <Text style={styles.title}>{data.title}</Text>
-                        <Text style={styles.title}>{data.title}</Text>
-                        <Text style={styles.title}>{data.title}</Text>
-                        <Text style={styles.title}>{data.title}</Text>
+                        <Text style={styles.sectionTitle}>감독</Text>
+                        <Text style={styles.contentText}>
+                            {credit.crew.filter(c=>c.job === "Director").map(c=>c.name).join(", ")}</Text>
+                        <Text style={styles.sectionTitle}>배우</Text>
+                        <Text style={styles.contentText}>
+                            {credit.cast.slice(0,10).map(c=>c.name).join(", ")}</Text>
+                        <Text style={styles.sectionTitle}>줄거리</Text>
+                        <Text style={styles.contentText}>{data.overview}</Text>
                     </View>
                 </ScrollView>
             )
