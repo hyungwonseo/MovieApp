@@ -37,7 +37,7 @@ export default function MovieListScreen() {
     function renderMovieItem({item}) {
         return (
             <TouchableOpacity style={styles.card}
-                onPress={()=>{}}
+                onPress={()=>router.push(`/${item.id}`)}
             >
                 <Image source={ item.poster_path ? { uri: IMG_PATH + item.poster_path } : noExist} 
                     style={styles.cardImage}
@@ -64,7 +64,15 @@ export default function MovieListScreen() {
         // 3. 로딩이 끝나고 데이타도 있을 때
         <View style={styles.container}>
             <View style={styles.tabContainer}>
-
+              {
+                categories.map((category, i) => (
+                  <TouchableOpacity key={i} onPress={()=>getMovies(i)}
+                    style={[styles.button, i === selectedCat && styles.selectedButton]}
+                  >
+                    <Text style={styles.buttonText}>{category.category}</Text>
+                  </TouchableOpacity>
+                ))
+              }
             </View>            
             <FlatList 
                 data={data.results}
