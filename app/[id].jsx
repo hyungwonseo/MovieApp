@@ -1,8 +1,7 @@
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, StyleSheet, TouchableOpacity } from "react-native";
-import { ScrollView } from "react-native-web";
-import { getMovieCreditById, getMovieDetailById } from "../components/api";
+import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { getMovieCreditById, getMovieDetailById, IMG_PATH } from "../components/api";
 import { IconBack } from '../components/icons';
 
 export default function MovieDetailScreen() {
@@ -57,15 +56,16 @@ export default function MovieDetailScreen() {
         {
             loading ? (
                 <View style={styles.loaderContainer}>
-                    <ActivityIndicator size={large} color="#1E90FF" />
+                    <ActivityIndicator size="large" color="#1E90FF" />
                 </View>
             ) : !data || !credit ? (
                 <View style={styles.loaderContainer}>
                     <Text>상세 정보를 불러올 수 없습니다.</Text>
                 </View>
             ) : (
-                <ScrollView style={styles.loaderContainer}>
-                    <Image></Image>
+                <ScrollView style={styles.container}>
+                    <Image source={data.backdrop_path ? {uri: IMG_PATH + data.backdrop_path} : noExist}
+                        style={styles.backdropImage} />
                     <View>
                         <Text style={styles.title}>{data.title}</Text>
                         <Text style={styles.tagline}>{data.tagline}</Text>
