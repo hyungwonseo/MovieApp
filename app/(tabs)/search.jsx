@@ -1,13 +1,10 @@
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
-    ActivityIndicator, FlatList,
-    Keyboard,
-    StyleSheet,
-    Text, TextInput, TouchableOpacity,
-    View
+    ActivityIndicator, FlatList, Image, Keyboard, StyleSheet, Text, TextInput,
+    TouchableOpacity, View
 } from "react-native";
-import { searchMoviesByKeyword } from "../../components/api";
+import { IMG_PATH, searchMoviesByKeyword } from "../../components/api";
 const noExist = require('../../components/img/no_exist.jpg');
 
 export default function SearchScreen() {
@@ -36,6 +33,19 @@ export default function SearchScreen() {
         }
     }
 
+    function renderMovieItem({item}) {
+        return (
+            <TouchableOpacity style={styles.card}
+                onPress={()=>router.push(`/${item.id}`)}
+            >
+                <Image source={ item.poster_path ? { uri: IMG_PATH + item.poster_path } : noExist} 
+                    style={styles.cardImage}
+                />
+                <Text style={styles.cardTitle} numberOfLines={1}>{item.title}</Text>                
+            </TouchableOpacity>
+        )
+    }
+
     return (
         <View style={styles.container}>
             <View style={styles.searchContainer}>
@@ -52,7 +62,18 @@ export default function SearchScreen() {
             { loading ? (
                 <ActivityIndicator style={{marginTop:20}}  size="large" color="#1E90FF" />
             ) : (
-                <FlatList />  
+                <FlatList 
+                    data={results}
+                    renderItem={renderMovieItem}
+                    keyExtractor={(item) => item.id.toString()}
+                    numColumns={2}
+                    contentContainerStyle={styles.listContainer}
+                    ListEmptyComponent={() => (
+                        searched && <View style={styles.emptyContainer}>
+                            <Text>검색 결과가 없습니다.</Text>
+                        </View>
+                    )}
+                />  
             )}
         </View>
     )
