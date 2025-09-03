@@ -1,6 +1,6 @@
 import { Stack, useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { ActivityIndicator, Image, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { getMovieCreditById, getMovieDetailById, IMG_PATH } from "../components/api";
 import { IconBack } from '../components/icons';
 
@@ -75,6 +75,18 @@ export default function MovieDetailScreen() {
                         <Text style={styles.contentText}>{data.release_date}</Text>
                         <Text style={styles.sectionTitle}>상영시간</Text>
                         <Text style={styles.contentText}>{data.runtime}분</Text>
+
+                        {
+                            data.homepage && (
+                                <>
+                                <Text style={styles.sectionTitle}>홈페이지</Text>
+                                <Text style={styles.linkText}
+                                    onPress={() => Linking.openURL(data.homepage)}
+                                >{data.homepage}</Text>
+                                </>
+                            )
+                        }
+
                         <Text style={styles.sectionTitle}>감독</Text>
                         <Text style={styles.contentText}>
                             {credit.crew.filter(c=>c.job === "Director").map(c=>c.name).join(", ")}</Text>
