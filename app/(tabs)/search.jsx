@@ -1,25 +1,56 @@
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { ActivityIndicator, FlatList, Text, TextInput, TouchableOpacity, View } from "react-native";
+import {
+    ActivityIndicator, FlatList,
+    Keyboard,
+    StyleSheet,
+    Text, TextInput, TouchableOpacity,
+    View
+} from "react-native";
+import { searchMoviesByKeyword } from "../../components/api";
 const noExist = require('../../components/img/no_exist.jpg');
 
 export default function SearchScreen() {
     const [keyword, setKeyword] = useState('');
     const [results, setResults] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [searched, setSearched] = useState(false);
     const router = useRouter();
 
+    async function handleSearch() {
+        if (!keyword.trim()) {
+            alert("검색어를 입력해주세요.");
+            return;
+        }
+        Keyboard.dismiss(); // 키보드 숨기기
+        setLoading(true);
+        setSearched(true);
+        try {
+            const response = await searchMoviesByKeyword(keyword);
+            setResults(response.data.results);
+        } catch (error) {
+            console.log(error);
+            alert('검색 중 오류가 발생했습니다.');
+        } finally {
+            setLoading(false);
+        }
+    }
+
     return (
-        <View>
-            <View>
-                <TextInput />
-                <TouchableOpacity>
-                    <Text>검색</Text>
+        <View style={styles.container}>
+            <View style={styles.searchContainer}>
+                <TextInput style={styles.input}
+                    placeholder="영화 제목을 검색해보세요..."
+                    value={keyword}
+                    onChangeText={setKeyword}
+                    onSubmitEditing={handleSearch}
+                />
+                <TouchableOpacity style={styles.button} onPress={handleSearch}>
+                    <Text style={styles.buttonText}>검색</Text>
                 </TouchableOpacity>
             </View>
             { loading ? (
-                <ActivityIndicator />
+                <ActivityIndicator style={{marginTop:20}}  size="large" color="#1E90FF" />
             ) : (
                 <FlatList />  
             )}
