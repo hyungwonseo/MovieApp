@@ -20,12 +20,27 @@ export default function LoginScreen() {
             <Text style={styles.title}>LOGIN</Text>
             <View style={styles.inputBox}>
                 <IconEmail />
+                <TextInput 
+                    style={styles.input}
+                    value={email}
+                    onChangeText={setEmail}
+                    placeholder="Username@gmail.com"
+                    keyboardType="email-address"
+                    autoCapitalize="none"
+                />
             </View>
             <View style={styles.inputBox}>
                 <IconPassword />
+                <TextInput 
+                    style={styles.input}
+                    value={password}
+                    onChangeText={setPassword}
+                    placeholder="Password"
+                    secureTextEntry={true}
+                />
             </View>
-            <TouchableOpacity onPress={handleSubmit}>
-                <Text>로그인</Text>
+            <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+                <Text style={styles.buttonText}>로그인</Text>
             </TouchableOpacity>
         </View>
     </KeyboardAvoidingView>
