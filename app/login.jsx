@@ -1,6 +1,6 @@
 import { useRouter } from "expo-router";
 import { useState } from "react";
-import { StyleSheet } from "react-native";
+import { KeyboardAvoidingView, Platform, StyleSheet, TouchableOpacity, View } from "react-native";
 import { useUserStore } from "../components/store";
 
 export default function LoginScreen() {
@@ -9,9 +9,21 @@ export default function LoginScreen() {
     const { login } = useUserStore();
     const router = useRouter();
 
-    function handleSubmint() {}
+    function handleSubmit() {}
 
     return <>
+    <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
+        style={styles.container}
+    >
+        <View style={styles.box}>
+            <Text>LOGIN</Text>
+            <View></View>
+            <View></View>
+            <TouchableOpacity onPress={handleSubmit}>
+                <Text>로그인</Text>
+            </TouchableOpacity>
+        </View>
+    </KeyboardAvoidingView>
     </>
 }
 
