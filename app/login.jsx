@@ -1,6 +1,7 @@
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { KeyboardAvoidingView, Platform, StyleSheet, TouchableOpacity, View } from "react-native";
+import { IconEmail, IconPassword } from "../components/icons";
 import { useUserStore } from "../components/store";
 
 export default function LoginScreen() {
@@ -16,9 +17,13 @@ export default function LoginScreen() {
         style={styles.container}
     >
         <View style={styles.box}>
-            <Text>LOGIN</Text>
-            <View></View>
-            <View></View>
+            <Text style={styles.title}>LOGIN</Text>
+            <View style={styles.inputBox}>
+                <IconEmail />
+            </View>
+            <View style={styles.inputBox}>
+                <IconPassword />
+            </View>
             <TouchableOpacity onPress={handleSubmit}>
                 <Text>로그인</Text>
             </TouchableOpacity>
