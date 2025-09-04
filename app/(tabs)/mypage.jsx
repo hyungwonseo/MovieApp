@@ -1,9 +1,31 @@
-import { StyleSheet, Text, View } from "react-native";
+import { useRouter } from "expo-router";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { useUserStore } from "../../components/store";
 
 export default function MyPageScreen() {
+    const { user, isLoggedIn, logout } = useUserStore();
+    const router = useRouter();
+
     return (
-        <View>
-            <Text>마이페이지</Text>
+        <View style={styles.container}>
+            {
+                isLoggedIn ? (
+                    <View style={styles.content}>
+                        <Text style={styles.welcomeText}>환여합니다!</Text>
+                        <Text style={styles.emailText}>{user.email}</Text>
+                        <TouchableOpacity style={styles.button} onPress={logout}>
+                            <Text style={styles.buttonText}>로그아웃</Text>
+                        </TouchableOpacity>
+                    </View>
+                ) : (
+                    <View style={styles.content}>
+                        <Text style={styles.infoText}>로그인이 필요합니다.</Text>
+                        <TouchableOpacity style={styles.button} onPress={()=>router.push('/login')}>
+                            <Text style={styles.buttonText}>로그인 페이지로 이동</Text>
+                        </TouchableOpacity>
+                    </View>
+                )
+            }
         </View>
     )
 }

@@ -10,7 +10,14 @@ export default function LoginScreen() {
     const { login } = useUserStore();
     const router = useRouter();
 
-    function handleSubmit() {}
+    function handleSubmit() {
+        if (email && password) {
+            login(email);
+            router.back();
+        } else {
+            alert("이메일과 패스워드를 입력해주세요.");
+        }
+    }
 
     return <>
     <KeyboardAvoidingView behavior={Platform.OS === "ios" ? "padding" : "height"}
